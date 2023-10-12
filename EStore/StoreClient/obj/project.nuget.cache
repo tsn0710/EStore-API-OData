@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nEz9nLMuU33p2UO4nxuJujeS+vQuaE3GGhy/Moh0nTNQQ5J6dVzhDzUHU3pphyYrzV0r/HhTzoJ5x1m1s0TG9A==",
+  "dgSpecHash": "Nn7YU2r5erVgCFFVHAuhz9aF2hpNQkpAx9HBo9VsiTfkwh2+Lvk4oqcS8MrCykOEovqw5KoswjYTnKnQW+Uk2w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Thinkpad\\Desktop\\EStore\\StoreClient\\StoreClient.csproj",
+  "projectFilePath": "C:\\Users\\Thinkpad\\Desktop\\EStore-API-OData\\EStore\\StoreClient\\StoreClient.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

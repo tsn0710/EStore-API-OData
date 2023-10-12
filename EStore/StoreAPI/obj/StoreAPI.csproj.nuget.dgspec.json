@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Thinkpad\\Desktop\\EStore\\StoreAPI\\StoreAPI.csproj": {}
+    "C:\\Users\\Thinkpad\\Desktop\\EStore-API-OData\\EStore\\StoreAPI\\StoreAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Thinkpad\\Desktop\\EStore\\StoreAPI\\StoreAPI.csproj": {
+    "C:\\Users\\Thinkpad\\Desktop\\EStore-API-OData\\EStore\\StoreAPI\\StoreAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Thinkpad\\Desktop\\EStore\\StoreAPI\\StoreAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Thinkpad\\Desktop\\EStore-API-OData\\EStore\\StoreAPI\\StoreAPI.csproj",
         "projectName": "StoreAPI",
-        "projectPath": "C:\\Users\\Thinkpad\\Desktop\\EStore\\StoreAPI\\StoreAPI.csproj",
+        "projectPath": "C:\\Users\\Thinkpad\\Desktop\\EStore-API-OData\\EStore\\StoreAPI\\StoreAPI.csproj",
         "packagesPath": "C:\\Users\\Thinkpad\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Thinkpad\\Desktop\\EStore\\StoreAPI\\obj\\",
+        "outputPath": "C:\\Users\\Thinkpad\\Desktop\\EStore-API-OData\\EStore\\StoreAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -66,7 +66,7 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.21, )"
+              "version": "[6.0.23, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",

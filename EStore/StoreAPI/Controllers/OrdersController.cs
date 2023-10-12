@@ -54,7 +54,7 @@ namespace StoreAPI.Controllers
         // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        public async Task<IActionResult> PutOrder([FromRoute] int id, [FromForm] Order order)
         {
             if (id != order.OrderId)
             {
@@ -84,8 +84,7 @@ namespace StoreAPI.Controllers
 
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder([FromForm]Order order)
         {
           if (_context.Orders == null)
           {
@@ -99,7 +98,7 @@ namespace StoreAPI.Controllers
 
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder(int id)
+        public async Task<IActionResult> DeleteOrder([FromRoute] int id)
         {
             if (_context.Orders == null)
             {
