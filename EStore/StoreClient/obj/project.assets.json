@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Thinkpad\\Desktop\\EStore\\StoreClient\\StoreClient.csproj",
+      "projectUniqueName": "C:\\Users\\Thinkpad\\Desktop\\EStore-API-OData\\EStore\\StoreClient\\StoreClient.csproj",
       "projectName": "StoreClient",
-      "projectPath": "C:\\Users\\Thinkpad\\Desktop\\EStore\\StoreClient\\StoreClient.csproj",
+      "projectPath": "C:\\Users\\Thinkpad\\Desktop\\EStore-API-OData\\EStore\\StoreClient\\StoreClient.csproj",
       "packagesPath": "C:\\Users\\Thinkpad\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Thinkpad\\Desktop\\EStore\\StoreClient\\obj\\",
+      "outputPath": "C:\\Users\\Thinkpad\\Desktop\\EStore-API-OData\\EStore\\StoreClient\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
