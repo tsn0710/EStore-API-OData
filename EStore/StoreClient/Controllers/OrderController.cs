@@ -148,5 +148,41 @@ namespace StoreClient.Controllers
             ViewData["members"] = members;
             return View(ov);
         }
+        public async Task<IActionResult> DetailAsync(int orderid)
+        {
+            HttpResponseMessage response = await client.GetAsync(OrderApiUrl + "(" + orderid + ")?$expand=OrderDetails");
+            string strData = await response.Content.ReadAsStringAsync();
+            var data = JObject.Parse(strData);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+            Order order = System.Text.Json.JsonSerializer.Deserialize<Order>(data.ToString(), options);
+            List<OrderDetailView> odvs = new List<OrderDetailView>();
+            foreach (OrderDetail od in order.OrderDetails)
+            {
+                OrderDetailView odv = new OrderDetailView()
+                {
+                    ProductId = od.ProductId,
+                    UnitPrice = od.UnitPrice,
+                    Quantity = od.Quantity,
+                    Discount = od.Discount,
+                    isDeleted = "f"
+                };
+                odvs.Add(odv);
+            }
+            OrderView ov = new OrderView()
+            {
+                OrderId = orderid,
+                MemberId = order.MemberId,
+                OrderDate = order.OrderDate,
+                RequiredDate = order.RequiredDate,
+                ShippedDate = order.ShippedDate,
+                Freight = order.Freight,
+                MaxNo = odvs.Count,
+                OrderDetailsView = odvs
+            };
+            return View(ov);
+        }
     }
 }
