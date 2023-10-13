@@ -1,0 +1,58 @@
+﻿@model Member;
+@{
+    ViewData["Title"] = "Profile";
+
+}
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string email = HttpContextAccessor.HttpContext.Session.GetString("Email") ?? "";
+}
+@if (email.Length == 0)
+{
+    <script type="text/javascript">
+        alert("Please login first");
+        window.location.href = "../Home/Login";
+    </script>
+}
+<br>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MemberId" class="control-label">Id</label>
+                <input asp-for="MemberId" class="form-control" value="@ViewBag.user.MemberId" readonly="readonly" />
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email(<span style="color:red">*</span>)</label>
+                <input asp-for="Email" class="form-control" value="@ViewBag.user.Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label">Company Name</label>
+                <input asp-for="CompanyName" class="form-control" value="@ViewBag.user.CompanyName" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label">City</label>
+                <input asp-for="City" class="form-control" value="@ViewBag.user.City" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Country" class="control-label">Country</label>
+                <input asp-for="Country" class="form-control" value="@ViewBag.user.Country" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label">Password(<span style="color:red">*</span>)</label>
+                <input type="password" asp-for="Password" class="form-control" value="@ViewBag.user.Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update information" class="btn btn-primary" style="width:100%;margin-top:5px" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -26,8 +26,8 @@
                 <span asp-validation-for="OrderDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RequiredDate" class="control-label">RequiredDate(<span style="color:red">*</span>)</label>
-                <input class="form-control"  type="date" asp-for="RequiredDate" value="@ViewBag.requireddate.ToString("yyyy-MM-dd")" />
+                <label asp-for="RequiredDate" class="control-label">RequiredDate</label>
+                <input class="form-control"  type="date" asp-for="RequiredDate" />
                 <span asp-validation-for="RequiredDate" class="text-danger"></span>
             </div>
             <div class="form-group">
