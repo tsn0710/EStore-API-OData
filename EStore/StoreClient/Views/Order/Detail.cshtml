@@ -1,0 +1,71 @@
+﻿@model OrderView
+@{
+    ViewData["Title"] = "Detail Order";
+}
+            <table style="width:50%;height:auto;border-radius:20px;background-color: #5F9EC0">
+                <tr>
+                    <td><p style="margin:5px">OrderId</p></td>
+                    <td><p style="margin:5px">@Model.OrderId</p></td>
+                </tr>
+                <tr>
+                    <td><p style="margin:5px">MemberId </p></td>
+                    <td><p style="margin:5px">@Model.MemberId </p></td>
+                </tr>
+                <tr>
+                    <td><p style="margin:5px">OrderDate </p></td>
+                    <td><p style="margin:5px">@String.Format("{0:MM/dd/yyyy}",Model.OrderDate)</p></td>
+                </tr>
+                <tr>
+                    <td><p style="margin:5px">RequiredDate </p></td>
+                    <td><p style="margin:5px">@String.Format("{0:MM/dd/yyyy}",Model.RequiredDate)</p></td>
+                </tr>
+                <tr>
+                    <td><p style="margin:5px">ShippedDate </p></td>
+                    <td><p style="margin:5px">@String.Format("{0:MM/dd/yyyy}",Model.ShippedDate)</p></td>
+                </tr>
+                <tr>
+                    <td><p style="margin:5px">Freight </p></td>
+                    <td><p style="margin:5px">@Model.Freight </p></td>
+                </tr>
+                <tr>
+                    <td><p style="margin:5px">MaxNo</p></td>
+                    <td><p style="margin:5px" id="MaxNo">@Model.MaxNo</p></td>
+                </tr>
+            </table>
+@foreach (OrderDetailView odv in Model.OrderDetailsView)
+{
+    <div>
+        <table style="width:80%;height:auto;border-radius:20px;margin-top:10px;background-color:#7DCE85">
+            <tr>
+                <td style="width:10%">
+                    <p style="margin:5px"> ProductId </p>
+                </td>
+                <td style="width:10%">
+                    <p style="margin:5px"> UnitPrice </p>
+                </td>
+                <td style="width:10%">
+                    <p style="margin:5px"> Quantity </p>
+                </td>
+                <td style="width:10%">
+                    <p style="margin:5px"> Discount </p>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <input value="@odv.ProductId" style="margin:5px; border-radius:5px;padding-left:10px" readonly />
+                </td>
+                <td>
+                    <input value="@odv.UnitPrice" style="margin:5px;border-radius:5px;padding-left:10px" readonly />
+                </td>
+                <td>
+                    <input value="@odv.Quantity" style="margin:5px;border-radius:5px;padding-left:10px" readonly />
+                </td>
+                <td>
+                    <input value="@odv.Discount" style="margin:5px;border-radius:5px;padding-left:10px" readonly />
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+}
