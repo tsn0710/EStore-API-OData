@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
 using StoreAPI.Models;
 
 namespace StoreAPI.Controllers
 {
-    [Route("odata/[controller]")]
+    [Route("odata")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : ODataController
     {
         private readonly eStoreContext _context;
 
@@ -34,7 +35,6 @@ namespace StoreAPI.Controllers
 
         // GET: api/Products/5
         [EnableQuery]
-        [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct([FromRoute] int id)
         {
           if (_context.Products == null)
@@ -53,8 +53,7 @@ namespace StoreAPI.Controllers
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct([FromRoute] int id, [FromForm] Product product)
+        public async Task<IActionResult> PutProduct([FromRoute] int id, [FromBody] Product product)
         {
             if (id != product.ProductId)
             {
@@ -84,7 +83,7 @@ namespace StoreAPI.Controllers
 
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        public async Task<ActionResult<Product>> PostProduct([FromForm] Product product)
+        public async Task<ActionResult<Product>> PostProduct([FromBody] Product product)
         {
           if (_context.Products == null)
           {
@@ -97,7 +96,6 @@ namespace StoreAPI.Controllers
         }
 
         // DELETE: api/Products/5
-        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct([FromRoute] int id)
         {
             if (_context.Products == null)

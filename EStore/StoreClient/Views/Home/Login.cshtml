@@ -1,0 +1,29 @@
+﻿@model Member
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email:</label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label">Password:</label>
+                <input type="password" asp-for="Password" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" style="width:100%;color:white;background:#BD0A2A;text-align: center;text-decoration:none;margin-top:5px" />
+            </div>
+            <div class="form-group" hidden>
+                <p style="width:100%;text-align: center;text-decoration:none;margin-top:10px">Do you want to buy product ?, <a asp-action="AddProfile" asp-controller="User">Register now !</a></p>
+            </div>
+        </form>
+    </div>
+</div>
