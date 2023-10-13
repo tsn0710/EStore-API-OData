@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
 using StoreAPI.Models;
 
@@ -12,7 +13,7 @@ namespace StoreAPI.Controllers
 {
     [Route("odata/[controller]")]
     [ApiController]
-    public class MembersController : ControllerBase
+    public class MembersController : ODataController
     {
         private readonly eStoreContext _context;
 
@@ -34,7 +35,6 @@ namespace StoreAPI.Controllers
 
         // GET: api/Members/5
         [EnableQuery]
-        [HttpGet("{id}")]
         public async Task<ActionResult<Member>> GetMember([FromRoute] int id)
         {
           if (_context.Members == null)
@@ -53,8 +53,7 @@ namespace StoreAPI.Controllers
 
         // PUT: api/Members/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMember([FromRoute] int id, [FromForm] Member member)
+        public async Task<IActionResult> PutMember([FromRoute] int id, [FromBody] Member member)
         {
             if (id != member.MemberId)
             {
@@ -84,12 +83,12 @@ namespace StoreAPI.Controllers
 
         // POST: api/Members
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        public async Task<ActionResult<Member>> PostMember([FromForm] Member member)
+        public async Task<ActionResult<Member>> PostMember([FromBody] Member member)
         {
-          if (_context.Members == null)
-          {
-              return Problem("Entity set 'eStoreContext.Members'  is null.");
-          }
+            if (_context.Members == null)
+            {
+                return Problem("Entity set 'eStoreContext.Members'  is null.");
+            }
             _context.Members.Add(member);
             await _context.SaveChangesAsync();
 
@@ -97,7 +96,7 @@ namespace StoreAPI.Controllers
         }
 
         // DELETE: api/Members/5
-        [HttpDelete("{id}")]
+
         public async Task<IActionResult> DeleteMember([FromRoute] int id)
         {
             if (_context.Members == null)

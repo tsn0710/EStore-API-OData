@@ -25,10 +25,8 @@ namespace StoreAPI
                     "odata",
                     modelBuilder.GetEdmModel()));
 
-
-
             var app = builder.Build();
-
+            app.UseODataRouteDebug();
             app.UseRouting();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());

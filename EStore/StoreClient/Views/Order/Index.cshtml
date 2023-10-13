@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Order>;
+
+@{
+    ViewData["Title"] = "Order List";
+
+}
+<a class="page-link border-radi" asp-action="Create"
+   style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Create new Order</a>
+<table class="table" style="width:85%">
+    <thead>
+        <tr>
+            <th>
+                <p>Order Id</p>
+            </th>
+            <th>
+                <p>Member Id</p>
+            </th>
+            <th>
+                <p>Order Date</p>
+            </th>
+            <th>
+                <p>Required Date</p>
+            </th>
+            <th>
+                <p>Shipped Date</p>
+            </th>
+            <th>
+                <p>Freight</p>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="width:6%">
+                    @Html.DisplayFor(modelItem=>item.OrderId)
+                </td>
+                <td style="width:6%">
+                    @Html.DisplayFor(modelItem=>item.MemberId)
+                </td>
+                <td style="width:20%">
+                    @Html.DisplayFor(modelItem=>item.OrderDate)
+                </td>
+                <td style="width:20%">
+                    @Html.DisplayFor(modelItem=>item.RequiredDate)
+                </td>
+                <td style="width:20%">
+                    @Html.DisplayFor(modelItem=>item.ShippedDate)
+                </td>
+                <td style="width:6%">
+                    @Html.DisplayFor(modelItem=>item.Freight)
+                </td>
+                <td style="width:8%">
+                    <a class="page-link border-radi" asp-action="Detail" 
+                   asp-route-orderid="@item.OrderId"
+                   style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Detail</a>
+                </td>
+                <td style="width:8%">
+                    <a class="page-link border-radi" asp-action="UpdateOrder"
+                   asp-route-orderid="@item.OrderId"
+                   style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Update</a>
+                 </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Nn7YU2r5erVgCFFVHAuhz9aF2hpNQkpAx9HBo9VsiTfkwh2+Lvk4oqcS8MrCykOEovqw5KoswjYTnKnQW+Uk2w==",
+  "dgSpecHash": "EOjWJYtyQ+YSxL2GAYj50zBuJCmKjQwMeD8rKZ1kJxBhLqds9aROgv+usZLOxDomPG7OjRJ06PM2CeFcqWe8Kw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Thinkpad\\Desktop\\EStore-API-OData\\EStore\\StoreClient\\StoreClient.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Thinkpad\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

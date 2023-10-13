@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace StoreAPI.Models
@@ -7,7 +8,7 @@ namespace StoreAPI.Models
     {
         public Order()
         {
-            OrderDetails = new HashSet<OrderDetail>();
+           OrderDetails = new HashSet<OrderDetail>();
         }
 
         public int OrderId { get; set; }
@@ -16,7 +17,7 @@ namespace StoreAPI.Models
         public DateTime? RequiredDate { get; set; }
         public DateTime ShippedDate { get; set; }
         public int? Freight { get; set; }
-
+        
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
