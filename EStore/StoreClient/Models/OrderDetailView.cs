@@ -2,6 +2,7 @@
 {
     public class OrderDetailView
     {
+        public int OrderDetailId { get; set; }
         public int ProductId { get; set; }
         public int UnitPrice { get; set; }
         public int Quantity { get; set; }

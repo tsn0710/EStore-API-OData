@@ -40,6 +40,17 @@
                 <td style="width:10%">
                     <p style="margin:5px"> ProductId </p>
                 </td>
+                @foreach (Product p in ViewBag.products)
+                {
+                    if (p.ProductId == odv.ProductId)
+                    {
+                        <td style="width:10%">
+                            <p style="margin:5px"> Product Name </p>
+                        </td>
+                        break;
+                    }
+                }
+
                 <td style="width:10%">
                     <p style="margin:5px"> UnitPrice </p>
                 </td>
@@ -49,12 +60,19 @@
                 <td style="width:10%">
                     <p style="margin:5px"> Discount </p>
                 </td>
-                
             </tr>
             <tr>
                 <td>
                     <input value="@odv.ProductId" style="margin:5px; border-radius:5px;padding-left:10px" readonly />
                 </td>
+                @foreach (Product p in ViewBag.products)
+                {
+                    if (p.ProductId == odv.ProductId)
+                    {
+                        <td><input value="@p.ProductName" style="margin:5px;border-radius:5px;padding-left:10px" readonly /></td>
+                        break;
+                    }
+                }
                 <td>
                     <input value="@odv.UnitPrice" style="margin:5px;border-radius:5px;padding-left:10px" readonly />
                 </td>

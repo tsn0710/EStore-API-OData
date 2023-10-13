@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StoreClient.Models;
@@ -14,6 +15,7 @@ namespace StoreClient.Controllers
         private string OrderApiUrl = "";
         private string MemberApiUrl="";
         private string ProductApiUrl = "";
+        private string OrderDetailApiUrl = "";
         public OrderController()
         {
             client = new HttpClient();
@@ -22,6 +24,7 @@ namespace StoreClient.Controllers
             OrderApiUrl = "https://localhost:7222/odata/Orders";
             MemberApiUrl = "https://localhost:7222/odata/Members";
             ProductApiUrl = "https://localhost:7222/odata/Products";
+            OrderDetailApiUrl = "https://localhost:7222/odata/OrderDetails";
         }
         public async Task<IActionResult> IndexAsync()
         {
@@ -115,6 +118,7 @@ namespace StoreClient.Controllers
             {
                 OrderDetailView odv = new OrderDetailView()
                 {
+                    OrderDetailId=od.OrderDetailId,
                     ProductId= od.ProductId,
                     UnitPrice= od.UnitPrice,
                     Quantity= od.Quantity,
@@ -146,8 +150,100 @@ namespace StoreClient.Controllers
             };
             List<Member> members = System.Text.Json.JsonSerializer.Deserialize<List<Member>>(listMemberj1.ToString(), options1);
             ViewData["members"] = members;
+            //lay list Product tu DataBase
+            HttpResponseMessage response2 = await client.GetAsync(ProductApiUrl);
+            string strData2 = await response2.Content.ReadAsStringAsync();
+            var data2 = JObject.Parse(strData2);
+            var listProductj = data2["value"];
+            List<Product> products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(listProductj.ToString(), options);
+            ViewData["products"] = products;
             return View(ov);
         }
+        [HttpPost]
+        public async Task<IActionResult> UpdateOrderPostAsync(IFormCollection collection)
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = false,
+            };
+            //lay gia tri max
+            //lap voi moi OrderDetail
+            //neu la delete thi phai co OrderDetailID de xoa
+            //neu la old thi next
+            //neu la new thi add (can OrderID)
+            int max = Int32.Parse(collection["MaxNo2"]);
+            int orderId = Int32.Parse(collection["orderID"]);
+            bool result = true;
+            for(int i = 1; i <= max; i++)
+            {
+                
+                if ((collection["isDelete_" + i].Equals("d")) && (collection["orderDetailId_" + i].ToString().Length!=0))
+                {
+                    result = await deleteOrderDetailAsync(collection["orderDetailId_" + i]);
+                }
+                else if(collection["isDelete_" + i].Equals("o"))
+                {
+                }
+                else if (collection["isDelete_" + i].Equals("n"))
+                {
+                    result = await addOrderDetailAsync(orderId,collection["productid_" + i], collection["unitprice_" + i], collection["quantity_" + i], collection["discount_" + i]);
+                }
+                else
+                {
+                }
+                if (result == false)
+                {
+                    return RedirectToAction("UpdateOrder", "Order", new { orderid =orderId});
+                }
+            }
+            if (result == true)
+            {
+                return RedirectToAction("Index", "Order");
+            }
+            else
+            {
+                return RedirectToAction("Create", "Order");
+            }
+        }
+
+
+        private async Task<bool> addOrderDetailAsync(int orderId, StringValues productid_5, StringValues unitprice_5, StringValues quantity_5, StringValues discount_5)
+        {
+            OrderDetail od = new OrderDetail()
+            {
+                OrderDetailId = 0,
+                ProductId = Int32.Parse(productid_5),
+                OrderId = orderId,
+                UnitPrice = Int32.Parse(unitprice_5),
+                Quantity = Int32.Parse(quantity_5),
+                Discount = Int32.Parse(discount_5)
+            };
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = false,
+            };
+            string json = System.Text.Json.JsonSerializer.Serialize<OrderDetail>(od, options);
+            StringContent httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(OrderDetailApiUrl, httpContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+
+            }
+            return false;
+        }
+
+        private async Task<bool> deleteOrderDetailAsync(StringValues orderDetailId_1)
+        {
+            HttpResponseMessage response = await client.DeleteAsync(OrderDetailApiUrl + "(" + Int32.Parse(orderDetailId_1) + ")");
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+
+            }
+            return false;
+        }
+
         public async Task<IActionResult> DetailAsync(int orderid)
         {
             HttpResponseMessage response = await client.GetAsync(OrderApiUrl + "(" + orderid + ")?$expand=OrderDetails");
@@ -182,6 +278,13 @@ namespace StoreClient.Controllers
                 MaxNo = odvs.Count,
                 OrderDetailsView = odvs
             };
+            //lay list Product tu DataBase
+            HttpResponseMessage response2 = await client.GetAsync(ProductApiUrl);
+            string strData2 = await response2.Content.ReadAsStringAsync();
+            var data2 = JObject.Parse(strData2);
+            var listProductj = data2["value"];
+            List<Product> products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(listProductj.ToString(), options);
+            ViewData["products"] = products;
             return View(ov);
         }
     }

@@ -119,13 +119,13 @@ namespace StoreAPI.Controllers
             return CreatedAtAction("GetOrder", new { id = order1.OrderId }, order1);
         }
         // DELETE: api/Orders/5
-        public async Task<IActionResult> DeleteOrder([FromRoute] int id)
+        public async Task<IActionResult> DeleteOrder([FromODataUri] int key)
         {
             if (_context.Orders == null)
             {
                 return NotFound();
             }
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders.FindAsync(key);
             if (order == null)
             {
                 return NotFound();

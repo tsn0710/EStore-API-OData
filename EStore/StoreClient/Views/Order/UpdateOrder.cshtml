@@ -2,38 +2,52 @@
 @{
     ViewData["Title"] = "Update Order";
 }
+<p id="debug"></p>
 <table style="width:90%">
     <tr>
         <td>
             <table style="width:95%;height:280px;border-radius:20px;background-color: #CAD5C9">
                 <tr>
-                    <td><p style="margin:5px">OrderId(<span style="color:red">*</span>)</p></td>
-                    <td><input name="ProductId" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
+                    <td><h3 style="margin:5px">Form:</h3></td>
                 </tr>
                 <tr>
-                    <td><p style="margin:5px">MemberId(<span style="color:red">*</span>)</p></td>
-                    <td><input name="UnitPrice" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
+                    <td><p style="margin:5px">Product(<span style="color:red">*</span>)</p></td>
+                    
+                    <td>
+                        <select class="form-control" id="ProductId" name="ProductId" style="margin:5px; border-radius:5px;padding-left:10px;width:80%"
+                                asp-items="@(new SelectList(ViewBag.products, nameof(Product.ProductId),nameof(Product.ProductName)))"
+                                >
+                        <option>Please select one</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
-                    <td><p style="margin:5px">OrderDate(<span style="color:red">*</span>)</p></td>
-                    <td><input name="Quantity" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
+                    <td><p style="margin:5px">UnitPrice(<span style="color:red">*</span>)</p></td>
+                    <td><input id="UnitPrice" name="UnitPrice" type="number" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
                 </tr>
                 <tr>
-                    <td><p style="margin:5px">RequiredDate(<span style="color:red">*</span>)</p></td>
-                    <td><input name="Discount" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
+                    <td><p style="margin:5px">Quantity(<span style="color:red">*</span>)</p></td>
+                    <td><input id="Quantity" name="Quantity" type="number" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
+                </tr>
+                <tr>
+                    <td><p style="margin:5px">Discount(<span style="color:red">*</span>)</p></td>
+                    <td><input id="Discount" name="Discount" type="number" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
                 </tr>
                 <tr hidden>
-                    <td><p style="margin:5px">Freight </p></td>
-                    <td><input name="isDeleted" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
+                    <td><p style="margin:5px"> </p></td>
+                    <td><input name="isDeleted" type="number" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><button style="width:80%;height:40px;border-radius:8px;background-color:#CCA7DC;margin:5px">Add this order detail</button></td>
+                    <td><button style="width:80%;height:40px;border-radius:8px;background-color:#CCA7DC;margin:5px" onclick="add()">Add this order detail</button></td>
                 </tr>
             </table>
         </td>
         <td>
             <table style="width:95%;height:300px;border-radius:20px;background-color: #5F9EC0">
+                <tr>
+                    <td><h3 style="margin:5px">Order:</h3></td>
+                </tr>
                 <tr>
                     <td><p style="margin:5px">OrderId</p></td>
                     <td><p style="margin:5px">@Model.OrderId</p></td>
@@ -60,50 +74,118 @@
                 </tr>
                 <tr>
                     <td><p style="margin:5px">MaxNo</p></td>
-                    <td><p style="margin:5px" id="MaxNo">@Model.MaxNo</p></td>
+                    <td><input type="number" id="MaxNo" value="@Model.MaxNo" style="margin:5px;border-radius:5px;padding-left:10px" readonly /></td>
                 </tr>
             </table>
         </td>
     </tr>
 </table>
-
-
-<div id="list">
+<br>
+@{
+    int i = 0;
+}
+<form asp-action="UpdateOrderPost">
+    <div class="row">
+    <div class="col-md-4"><h3>List Order Detail:</h3></div>
+    <div class="col-md-3"></div>
+        <div class="col-md-4"><input type="submit" value="Đăng ký" class="btn btn-primary" style="width:80%;height:95%;border-radius:5px;background-color:#FF2D00" /></div>
+    </div>
+    <input type="number" id="MaxNo2" name="MaxNo2" value="@Model.MaxNo" hidden />
+    <input name="orderID" value="@Model.OrderId" hidden/>
+<div id="ListOrderDetail">
 @foreach(OrderDetailView odv in Model.OrderDetailsView)
 {
-<div>
+    i++;
+<div id="orderdetail_@i">
+    <input type="number" name="orderDetailId_@i" value="@odv.OrderDetailId" hidden/>
         <table style="width:80%;height:auto;border-radius:20px;margin-top:10px;background-color:#7DCE85">
         <tr>
-                <td style="width:10%">
-                    <p style="margin:5px"> ProductId </p>
+                <td style="width:100px">
+                            <p style="margin:5px;width:100px"> ProductId </p>
             </td>
-                <td style="width:10%">
+                        @foreach(Product p in ViewBag.products)
+                        {
+                            if (p.ProductId == odv.ProductId)
+                            {
+                                <td style="width:10%">
+                                    <p style="margin:5px"> Product Name </p>
+                                </td>
+                                break;
+                            }
+                        }
+
+                        <td style="width:150px">
                     <p style="margin:5px"> UnitPrice </p>
             </td>
-                <td style="width:10%">
+                <td style="width:150px">
                     <p style="margin:5px"> Quantity </p>
             </td>
-                <td style="width:10%">
+                <td style="width:150px">
                 <p style="margin:5px"> Discount </p>
             </td>
-                <td style="width:10%"><button style="width:100px;height:80%;border-radius:5px;margin-top:5px;margin-right:5px;background-color:#E4B624"> Delete </button></td>
+                <td style="width:10%"><button type="button" style="width:100px;height:80%;border-radius:5px;margin-top:5px;margin-right:5px;background-color:#E4B624" onclick="delete1(@i)"> Delete </button></td>
         </tr>
         <tr>
             <td>
-                    <input value="@odv.ProductId" style="margin:5px; border-radius:5px;padding-left:10px"readonly/>
+                    <input name="productid_@i" value="@odv.ProductId" style="margin:5px; border-radius:5px;padding-left:10px;width:100px" readonly />
+            </td>
+                        @foreach (Product p in ViewBag.products)
+                        {
+                            if (p.ProductId == odv.ProductId)
+                            {
+                                <td><input value="@p.ProductName" style="margin:5px;border-radius:5px;padding-left:10px" readonly /></td>
+                                break;
+                            }
+                        }
+            <td>
+                            <input name="unitprice_@i" value="@odv.UnitPrice" style="margin:5px;border-radius:5px;padding-left:10px;width:150px" readonly />
             </td>
             <td>
-                    <input value="@odv.UnitPrice" style="margin:5px;border-radius:5px;padding-left:10px" readonly />
+                            <input name="quantity_@i" value="@odv.Quantity" style="margin:5px;border-radius:5px;padding-left:10px;width:150px" readonly />
             </td>
             <td>
-                    <input value="@odv.Quantity" style="margin:5px;border-radius:5px;padding-left:10px" readonly />
+                            <input name="discount_@i" value="@odv.Discount" style="margin:5px;border-radius:5px;padding-left:10px;width:150px" readonly />
             </td>
-            <td>
-                    <input value="@odv.Discount" style="margin:5px;border-radius:5px;padding-left:10px" readonly />
-            </td>
-            <td></td>
+                        <td><input id="isDelete_@i" name="isDelete_@i" type="text" value="o" hidden /></td>
         </tr>
     </table>
 </div>
 }
+
 </div>
+<script>
+    function add(){
+            var e = document.getElementById("ProductId");
+            var ProductName = e.options[e.selectedIndex].text;
+        var ProductId = document.getElementById('ProductId').value;
+        var UnitPrice = document.getElementById('UnitPrice').value;
+        var Quantity = document.getElementById('Quantity').value;
+        var Discount = document.getElementById('Discount').value;
+        var MaxNo = document.getElementById('MaxNo').value;
+        MaxNo ++;
+        document.getElementById('MaxNo').value=MaxNo;
+        document.getElementById('MaxNo2').value=MaxNo;
+        document.getElementById('debug').innerHTML = ProductId + "" + UnitPrice + "" + Quantity + "" + Discount + "" + MaxNo;
+        var NewIdOfProductId = "productid_" + MaxNo;
+        var NewIdOfUnitPrice = "unitprice_" + MaxNo;
+        var NewIdOfQuantity = "quantity_" + MaxNo;
+        var NewIdOfDiscount = "discount_" + MaxNo;
+        var NewIdOfIsDelete = "isDelete_" + MaxNo;
+        var NewIdOfOrderDetail = "orderdetail_" + MaxNo;
+            document.getElementById('ListOrderDetail').innerHTML = "<div id=\"" + NewIdOfOrderDetail + "\"><table style=\"width:80%;height:auto;border-radius:20px;margin-top:10px;background-color:#7DCE85\"><tr><td style=\"width:100px\"><p style=\"margin:5px;width:100px\"> ProductId </p></td><td style=\"width:10%\"><p style=\"margin:5px\"> Product Name </p></td><td style=\"width:10%\"><p style=\"width:150px\"> UnitPrice </p></td><td style=\"width:150px\"><p style=\"margin:5px\"> Quantity </p></td><td style=\"width:150px\"><p style=\"margin:5px\"> Discount </p></td><td style=\"width:10%\"><button type=\"button\" style=\"width:100px;height:80%;border-radius:5px;margin-top:5px;margin-right:5px;background-color:#E4B624\" onclick=\"delete1(" + MaxNo + ")\"> Delete </button></td></tr><tr><td><input name=\"" + NewIdOfProductId + "\" value=\"" + ProductId + "\" style=\"margin:5px; border-radius:5px;padding-left:10px;width:100px\" readonly /></td><td><input value=\"" + ProductName + "\" style=\"margin:5px;border-radius:5px;padding-left:10px\" readonly /></td><td><input name=\"" + NewIdOfUnitPrice + "\" value=\"" + UnitPrice + "\" style=\"margin:5px;border-radius:5px;padding-left:10px;width:150px\" readonly /></td><td><input name=\"" + NewIdOfQuantity + "\" value=\"" + Quantity + "\" style=\"margin:5px;border-radius:5px;padding-left:10px;width:150px\" readonly /></td><td><input name=\"" + NewIdOfDiscount + "\"value=\"" + Discount + "\" style=\"margin:5px;border-radius:5px;padding-left:10px;width:150px\" readonly /></td><td><input id=\"" + NewIdOfIsDelete + "\" name=\"" + NewIdOfIsDelete + "\" type=\"text\" value=\"n\" hidden/></td></tr></table></div>" + document.getElementById('ListOrderDetail').innerHTML;
+    }
+</script>
+<script>
+        function delete1(orderdetailID) {
+
+            document.getElementById('orderdetail_' + orderdetailID).style.display = 'none';
+        document.getElementById("isDelete_" + orderdetailID).setAttribute("value", "d");
+        document.getElementById('isDelete_' + orderdetailID).value = "d";
+    }
+    </script>
+</form>
+<script>
+    function getProductName(caller) {
+        document.getElementById('ProductName').value = caller.name;
+    }
+</script>
