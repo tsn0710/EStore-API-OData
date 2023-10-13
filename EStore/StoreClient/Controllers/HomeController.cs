@@ -82,7 +82,7 @@ namespace StoreClient.Controllers
         {
             HttpContext.Session.Remove("MemberId");
             HttpContext.Session.Remove("Email");
-            return RedirectToAction("Index", "Order");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

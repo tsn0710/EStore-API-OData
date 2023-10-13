@@ -55,7 +55,6 @@ namespace StoreClient.Controllers
             List<Member> members = System.Text.Json.JsonSerializer.Deserialize<List<Member>>(listMemberj.ToString(), options);
             ViewData["members"] = members;
             ViewData["orderdate"] = DateTime.Now;
-            ViewData["requireddate"] = DateTime.Now;
             ViewData["shippeddate"] = DateTime.Now;
             return View();
         }

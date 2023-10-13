@@ -35,13 +35,13 @@ namespace StoreAPI.Controllers
 
         // GET: api/Members/5
         [EnableQuery]
-        public async Task<ActionResult<Member>> GetMember([FromRoute] int id)
+        public async Task<ActionResult<Member>> GetMember([FromRoute] int key)
         {
           if (_context.Members == null)
           {
               return NotFound();
           }
-            var member = await _context.Members.FindAsync(id);
+            var member = await _context.Members.FindAsync(key);
 
             if (member == null)
             {
@@ -53,9 +53,9 @@ namespace StoreAPI.Controllers
 
         // PUT: api/Members/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        public async Task<IActionResult> PutMember([FromRoute] int id, [FromBody] Member member)
+        public async Task<IActionResult> PutMember([FromRoute] int key, [FromBody] Member member)
         {
-            if (id != member.MemberId)
+            if (key != member.MemberId)
             {
                 return BadRequest();
             }
@@ -68,7 +68,7 @@ namespace StoreAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MemberExists(id))
+                if (!MemberExists(key))
                 {
                     return NotFound();
                 }
