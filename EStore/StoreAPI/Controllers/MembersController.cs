@@ -97,13 +97,13 @@ namespace StoreAPI.Controllers
 
         // DELETE: api/Members/5
 
-        public async Task<IActionResult> DeleteMember([FromRoute] int id)
+        public async Task<IActionResult> DeleteMember([FromRoute] int key)
         {
             if (_context.Members == null)
             {
                 return NotFound();
             }
-            var member = await _context.Members.FindAsync(id);
+            var member = await _context.Members.FindAsync(key);
             if (member == null)
             {
                 return NotFound();

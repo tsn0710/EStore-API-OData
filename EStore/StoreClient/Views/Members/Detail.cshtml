@@ -1,0 +1,33 @@
+﻿@model Member;
+
+@{
+    ViewData["Title"] = "Member";
+}
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string email = HttpContextAccessor.HttpContext.Session.GetString("Email") ?? "";
+}
+@if (email.Length == 0)
+{
+        <script type="text/javascript">
+            alert("Please login first");
+        window.location.href = "../../Home/Login";
+        </script>
+}
+<h1>Details</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Member Information</h3>
+        <ul>
+            <li> MemberID: @Model.MemberId</li>
+            <li>Company Name: @Model.CompanyName</li>
+            <li>Password: @Model.Password</li>
+            <li>Email: @Model.Email</li>
+            <li>City: @Model.City</li>
+            <li>Country: @Model.Country</li>
+        </ul>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+</div>

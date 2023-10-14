@@ -1,0 +1,56 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Update";
+}
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string email = HttpContextAccessor.HttpContext.Session.GetString("Email") ?? "";
+}
+@if (email.Length == 0)
+{
+    <script type="text/javascript">
+        alert("Please login first");
+        window.location.href = "../../Home/Login";
+    </script>
+}
+@{
+    List<Category> categories = ViewData["categories"] as List<Category>;
+}
+
+<h1>Update Product</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" action="@Url.Action("Update", "Products", new { @Model.ProductId })">
+            <div class="form-group">
+                <label for="ProductName">Product Name:</label>
+                <input asp-for="@Model.ProductName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="CategoryId">Category:</label>
+                <select asp-for="@Model.CategoryId" class="form-control">
+                    @foreach (var category in ViewData["categories"] as List<Category>)
+                    {
+                        <option value="@category.CategoryId">@category.CategoryName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Weight">Weight:</label>
+                <input asp-for="@Model.Weight" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="UnitPrice">UnitPrice:</label>
+                <input asp-for="@Model.UnitPrice" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="UnitInStock">UnitsInStock:</label>
+                <input asp-for="@Model.UnitInStock" class="form-control" />
+            </div>
+            <input type="submit" value="Update" class="btn btn-primary" />
+        </form>
+        
+    </div>
+
+</div>

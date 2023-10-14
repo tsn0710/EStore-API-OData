@@ -55,16 +55,18 @@
                 <td style="width:6%">
                     @Html.DisplayFor(modelItem=>item.Freight)
                 </td>
-                <td style="width:8%">
-                    <a class="page-link border-radi" asp-action="Detail" 
+                
+                    <td style="width:8%">
+                        <a class="page-link border-radi" asp-action="Detail" 
                    asp-route-orderid="@item.OrderId"
                    style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Detail</a>
-                </td>
-                <td style="width:8%">
-                    <a class="page-link border-radi" asp-action="UpdateOrder"
+                    </td>
+                    <td style="width:8%">
+                        <a class="page-link border-radi" asp-action="UpdateOrder"
                    asp-route-orderid="@item.OrderId"
                    style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Update</a>
-                 </td>
+                    </td>
+                
             </tr>
         }
     </tbody>

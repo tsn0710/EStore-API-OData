@@ -3,6 +3,17 @@
     ViewData["Title"] = "Create order";
 
 }
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string email = HttpContextAccessor.HttpContext.Session.GetString("Email") ?? "";
+}
+@if (email.Length == 0)
+{
+    <script type="text/javascript">
+        alert("Please login first");
+        window.location.href = "../../Home/Login";
+    </script>
+}
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">

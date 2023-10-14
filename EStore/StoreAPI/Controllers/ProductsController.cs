@@ -35,13 +35,13 @@ namespace StoreAPI.Controllers
 
         // GET: api/Products/5
         [EnableQuery]
-        public async Task<ActionResult<Product>> GetProduct([FromRoute] int id)
+        public async Task<ActionResult<Product>> GetProduct([FromRoute] int key)
         {
           if (_context.Products == null)
           {
               return NotFound();
           }
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.FindAsync(key);
 
             if (product == null)
             {
@@ -53,9 +53,9 @@ namespace StoreAPI.Controllers
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        public async Task<IActionResult> PutProduct([FromRoute] int id, [FromBody] Product product)
+        public async Task<IActionResult> PutProduct([FromRoute] int key, [FromBody] Product product)
         {
-            if (id != product.ProductId)
+            if (key != product.ProductId)
             {
                 return BadRequest();
             }
@@ -68,7 +68,7 @@ namespace StoreAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!ProductExists(key))
                 {
                     return NotFound();
                 }
@@ -96,13 +96,13 @@ namespace StoreAPI.Controllers
         }
 
         // DELETE: api/Products/5
-        public async Task<IActionResult> DeleteProduct([FromRoute] int id)
+        public async Task<IActionResult> DeleteProduct([FromRoute] int key)
         {
             if (_context.Products == null)
             {
                 return NotFound();
             }
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.FindAsync(key);
             if (product == null)
             {
                 return NotFound();

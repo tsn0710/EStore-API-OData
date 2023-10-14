@@ -1,0 +1,151 @@
+﻿@model IEnumerable<Product>;
+
+@{
+    ViewData["Title"] = "Product";
+
+}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <a class="page-link border-radi" asp-action="Create" style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Create new Product</a>
+    
+</div>
+<table class="table" style="width:98%;height:238px;border:1px solid black;margin:5px">
+    <thead>
+        <tr>
+            <th>
+                <p>Product Id</p>
+            </th>
+            <th>
+                <p>Category Id</p>
+            </th>
+            <th>
+                <p>Product Name</p>
+            </th>
+            <th>
+                <p>Weight</p>
+            </th>
+            <th>
+                <p>Unit Price</p>
+            </th>
+            <th>
+                <p>Unit In Stock</p>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Product item in ViewData["fiveProduct"] as List<Product>)
+        {
+            <tr>
+                <td style="width:12%">
+                    @Html.DisplayFor(modelItem=>item.ProductId)
+                </td>
+                <td style="width:12%">
+                    @Html.DisplayFor(modelItem=>item.CategoryId)
+                </td>
+                <td style="width:15%">
+                    @Html.DisplayFor(modelItem=>item.ProductName)
+                </td>
+                <td style="width:6%">
+                    @Html.DisplayFor(modelItem=>item.Weight)
+                </td>
+                <td style="width:10%">
+                    @Html.DisplayFor(modelItem=>item.UnitPrice)
+                </td>
+                <td style="width:15%">
+                    @Html.DisplayFor(modelItem=>item.UnitInStock)
+                </td>
+                <td style="width:8%">
+                    <a class="page-link border-radi" asp-action="Detail"
+                       asp-route-productid="@item.ProductId"
+                       style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Detail</a>
+                </td>
+                <td style="width:8%">
+                    <a class="page-link border-radi" asp-action="Update"
+                       asp-route-productid="@item.ProductId"
+                       style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Update</a>
+                </td>
+                <td style="width:8%">
+                    <a class="page-link border-radi" asp-action="Delete"
+                       asp-route-productid="@item.ProductId"
+                       style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table style="width:20vw; margin-top:15px;margin-left: auto; margin-right: auto;">
+    <tr>
+        <td style="width:100px">
+            @if (ViewBag.pageNumber != 1)
+            {
+                <a class="page-link border-radi" asp-action="Index"
+               asp-route-pageNumber="@(ViewBag.pageNumber-1)"
+               asp-route-productName="@(ViewBag.productName)"
+               asp-route-UnitpriceFrom="@(ViewBag.UnitpriceFrom)"
+               asp-route-UnitpriceTo="@(ViewBag.UnitpriceTo)"
+               style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Previous</a>
+            }
+
+        </td>
+        <td style="width:100px">
+            <p style="margin-top:5px;margin-bottom:5px;text-align: center;">@ViewBag.pageNumber/@ViewBag.pageCount</p>
+        </td>
+        <td style="width:100px">
+            @if (ViewBag.pageNumber != ViewBag.pageCount)
+            {
+                <a class="page-link border-radi" asp-action="Index"
+               asp-route-pageNumber="@(ViewBag.pageNumber+1)"
+               asp-route-productName="@(ViewBag.productName)"
+               asp-route-UnitpriceFrom="@(ViewBag.UnitpriceFrom)"
+               asp-route-UnitpriceTo="@(ViewBag.UnitpriceTo)"
+               style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Next</a>
+
+            }
+        </td>
+    </tr>
+</table>
+<form asp-action="Index" method="get">
+    <div class="container mt-1">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <br>
+                    <label class="control-label">ProductName: </label>
+                    <input name="ProductName" class="form-control" value="@(ViewBag.ProductName)" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <br>
+                    <label class="control-label">Unit price From: </label>
+                    <input type="number" name="UnitpriceFrom" class="form-control" value="@(ViewBag.UnitpriceFrom)" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label">Unit price To: </label>
+                    <input type="number" name="UnitpriceTo" class="form-control" value="@(ViewBag.UnitpriceTo)" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-1">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group" style="width:200px">
+                    <input type="submit" value="Search" class="form-control" style="width:100%;height:100%;background-color:#BD0A2A;color:white;" />
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group" style="width:200px">
+                    <a class="form-control" asp-action="Index" asp-route-pageNumber="-10" style="width:100%;color:white;background:#BD0A2A;text-align: center;text-decoration:none">Display all product</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

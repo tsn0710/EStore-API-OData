@@ -2,6 +2,17 @@
 @{
     ViewData["Title"] = "Update Order";
 }
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string email = HttpContextAccessor.HttpContext.Session.GetString("Email") ?? "";
+}
+@if (email.Length == 0)
+{
+    <script type="text/javascript">
+        alert("Please login first");
+        window.location.href = "../../Home/Login";
+    </script>
+}
 <p id="debug"></p>
 <table style="width:90%">
     <tr>
@@ -88,7 +99,7 @@
     <div class="row">
     <div class="col-md-4"><h3>List Order Detail:</h3></div>
     <div class="col-md-3"></div>
-        <div class="col-md-4"><input type="submit" value="Đăng ký" class="btn btn-primary" style="width:80%;height:95%;border-radius:5px;background-color:#FF2D00" /></div>
+        <div class="col-md-4"><input type="submit" value="Save all" class="btn btn-primary" style="width:80%;height:95%;border-radius:5px;background-color:#FF2D00" /></div>
     </div>
     <input type="number" id="MaxNo2" name="MaxNo2" value="@Model.MaxNo" hidden />
     <input name="orderID" value="@Model.OrderId" hidden/>

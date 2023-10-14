@@ -1,0 +1,34 @@
+﻿@model Product;
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string email = HttpContextAccessor.HttpContext.Session.GetString("Email") ?? "";
+}
+@if (email.Length == 0)
+{
+    <script type="text/javascript">
+        alert("Please login first");
+        window.location.href = "../../Home/Login";
+    </script>
+}
+@{
+    List<Category> categories = ViewData["categories"] as List<Category>;
+}
+<h3>Create new Product</h3>
+
+<form method="post">
+    Product Name <input asp-for="@Model.ProductName" class="form-control w-50" /><br />
+    Weight <input asp-for="@Model.Weight" class="form-control w-50" /><br />
+    Price <input asp-for="@Model.UnitPrice" class="form-control w-50" /><br />
+    UnitslnStock <input asp-for="@Model.UnitInStock" /><br />
+    Category
+    <div class="flex-row gap-3">
+        <select asp-for="@Model.CategoryId">
+            @foreach (var category in categories)
+            {
+                <option value="@category.CategoryId">@category.CategoryName</option>
+            }
+        </select>
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+   
+</form>

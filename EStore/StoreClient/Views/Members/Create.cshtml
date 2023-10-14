@@ -1,0 +1,23 @@
+﻿@model Member;
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    string email = HttpContextAccessor.HttpContext.Session.GetString("Email") ?? "";
+}
+@if (email.Length == 0)
+{
+    <script type="text/javascript">
+        alert("Please login first");
+        window.location.href = "../../Home/Login";
+    </script>
+}
+
+    <h3>Create new Member</h3>
+
+    <form method="post">
+        Email <input asp-for="@Model.Email" class="form-control w-50" /><br />
+        CompanyName <input asp-for="@Model.CompanyName" class="form-control w-50" /><br />
+        City <input asp-for="@Model.City" class="form-control w-50" /><br />
+        Country <input asp-for="@Model.Country" class="form-control w-50" /><br />
+        Password <input asp-for="@Model.Password" class="form-control w-50" /><br />
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </form>

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Member>;
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <a class="page-link border-radi" asp-action="Create" style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Create new Member</a>
+</div>
+<table class="table" style="width:85%">
+    <thead>
+        <tr>
+            <th>
+                <p>Member Id</p>
+            </th>
+            <th>
+                <p>Email</p>
+            </th>
+            <th>
+                <p>Company Name</p>
+            </th>
+            <th>
+                <p>City</p>
+            </th>
+            <th>
+                <p>Country</p>
+            </th>
+            <th>
+                <p>Password</p>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="width:6%">
+                    @Html.DisplayFor(modelItem=>item.MemberId)
+                </td>
+                <td style="width:6%">
+                    @Html.DisplayFor(modelItem=>item.Email)
+                </td>
+                <td style="width:20%">
+                    @Html.DisplayFor(modelItem=>item.CompanyName)
+                </td>
+                <td style="width:20%">
+                    @Html.DisplayFor(modelItem=>item.City)
+                </td>
+                <td style="width:20%">
+                    @Html.DisplayFor(modelItem=>item.Country)
+                </td>
+                <td style="width:6%">
+                    @Html.DisplayFor(modelItem=>item.Password)
+                </td>
+                <td style="width:8%">
+                    <a class="page-link border-radi" asp-action="Detail"
+                       asp-route-memberid="@item.MemberId"
+                       style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Detail</a>
+                </td>
+                <td style="width:8%">
+                    <a class="page-link border-radi" asp-action="Update"
+                       asp-route-memberid="@item.MemberId"
+                       style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Update</a>
+                </td>
+                <td style="width:8%">
+                    <a class="page-link border-radi" asp-action="Delete"
+                       asp-route-memberid="@item.MemberId"
+                       style="width:100%; border:2px solid #BD0A2A;color:white;background:#BD342E;text-align: center;border-radius:10px">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
