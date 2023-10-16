@@ -16,13 +16,13 @@
 <h3>Create new Product</h3>
 
 <form method="post">
-    Product Name <input asp-for="@Model.ProductName" class="form-control w-50" /><br />
-    Weight <input asp-for="@Model.Weight" class="form-control w-50" /><br />
-    Price <input asp-for="@Model.UnitPrice" class="form-control w-50" /><br />
-    UnitslnStock <input asp-for="@Model.UnitInStock" /><br />
+    Product Name <input asp-for="@Model.ProductName" class="form-control w-50" required /><br />
+    Weight <input asp-for="@Model.Weight" class="form-control w-50"  /><br />
+    Price <input asp-for="@Model.UnitPrice" class="form-control w-50" required /><br />
+    UnitslnStock <input asp-for="@Model.UnitInStock" /><br required />
     Category
     <div class="flex-row gap-3">
-        <select asp-for="@Model.CategoryId">
+        <select asp-for="@Model.CategoryId" required>
             @foreach (var category in categories)
             {
                 <option value="@category.CategoryId">@category.CategoryName</option>

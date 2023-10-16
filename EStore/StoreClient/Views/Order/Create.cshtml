@@ -25,15 +25,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="MemberId" class="control-label">MemberId(<span style="color:red">*</span>)</label>
-                <select class="form-control"  asp-for="MemberId"
-                        asp-items="@(new SelectList(ViewBag.members, nameof(Member.MemberId), nameof(Member.Email)))">
-                    <option>Please select one</option>
-                </select>
+                
+                <input asp-for="MemberId" class="form-control" value="@ViewBag.members.MemberId" readonly="readonly" />
                 <span asp-validation-for="MemberId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="OrderDate" class="control-label">OrderDate(<span style="color:red">*</span>)</label>
-                <input class="form-control"  type="date" asp-for="OrderDate" value="@ViewBag.orderdate.ToString("yyyy-MM-dd")" />
+                <input class="form-control" type="date" asp-for="OrderDate" value="@ViewBag.orderdate.ToString("yyyy-MM-dd")" required />
                 <span asp-validation-for="OrderDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -43,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ShippedDate" class="control-label">ShippedDate(<span style="color:red">*</span>)</label>
-                <input class="form-control" type="date" asp-for="ShippedDate" value="@ViewBag.shippeddate.ToString("yyyy-MM-dd")" />
+                <input class="form-control" type="date" asp-for="ShippedDate" value="@ViewBag.shippeddate.ToString("yyyy-MM-dd")" required />
                 <span asp-validation-for="ShippedDate" class="text-danger"></span>
             </div>
             <div class="form-group">

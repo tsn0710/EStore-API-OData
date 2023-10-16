@@ -14,10 +14,10 @@
     <h3>Create new Member</h3>
 
     <form method="post">
-        Email <input asp-for="@Model.Email" class="form-control w-50" /><br />
+    Email <input asp-for="@Model.Email" class="form-control w-50" required /><br />
         CompanyName <input asp-for="@Model.CompanyName" class="form-control w-50" /><br />
         City <input asp-for="@Model.City" class="form-control w-50" /><br />
         Country <input asp-for="@Model.Country" class="form-control w-50" /><br />
-        Password <input asp-for="@Model.Password" class="form-control w-50" /><br />
+    Password <input asp-for="@Model.Password" class="form-control w-50" required /><br />
         <input type="submit" value="Add" class="btn btn-primary" />
     </form>

@@ -44,15 +44,13 @@ namespace StoreClient.Controllers
         public async Task<IActionResult> CreateAsync()
         {
             //lay list Member tu DataBase
-            HttpResponseMessage response = await client.GetAsync(MemberApiUrl);
+            HttpResponseMessage response = await client.GetAsync(MemberApiUrl+"("+ HttpContext.Session.GetInt32("MemberId") + ")");
             string strData = await response.Content.ReadAsStringAsync();
-            var data = JObject.Parse(strData);
-            var listMemberj = data["value"];
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
             };
-            List<Member> members = System.Text.Json.JsonSerializer.Deserialize<List<Member>>(listMemberj.ToString(), options);
+            Member members = System.Text.Json.JsonSerializer.Deserialize<Member>(strData, options);
             ViewData["members"] = members;
             ViewData["orderdate"] = DateTime.Now;
             ViewData["shippeddate"] = DateTime.Now;
@@ -101,12 +99,20 @@ namespace StoreClient.Controllers
             //response.EnsureSuccessStatusCode();
             //return RedirectToAction("Create", "Order");
         }
-
         public async Task<IActionResult> UpdateOrderAsync(int orderid)
         {
             HttpResponseMessage response = await client.GetAsync(OrderApiUrl+"("+ orderid + ")?$expand=OrderDetails");
+            JObject data;
             string strData = await response.Content.ReadAsStringAsync();
-            var data = JObject.Parse(strData);
+            try
+            {
+                 data = JObject.Parse(strData);
+            }
+            catch (Exception ex)
+            {
+                //return RedirectToAction("UpdateOrder", "Order", new {orderid=1});
+                return Redirect("https://localhost:7083/Order/UpdateOrder?orderid="+ X.id);
+            }
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
@@ -161,47 +167,56 @@ namespace StoreClient.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateOrderPostAsync(IFormCollection collection)
         {
-            var options = new JsonSerializerOptions
+            
+            int orderId1 = Int32.Parse(collection["orderID"]);
+            X.id = orderId1;
+            try
             {
-                PropertyNameCaseInsensitive = false,
-            };
-            //lay gia tri max
-            //lap voi moi OrderDetail
-            //neu la delete thi phai co OrderDetailID de xoa
-            //neu la old thi next
-            //neu la new thi add (can OrderID)
-            int max = Int32.Parse(collection["MaxNo2"]);
-            int orderId = Int32.Parse(collection["orderID"]);
-            bool result = true;
-            for(int i = 1; i <= max; i++)
-            {
-                
-                if ((collection["isDelete_" + i].Equals("d")) && (collection["orderDetailId_" + i].ToString().Length!=0))
+                var options = new JsonSerializerOptions
                 {
-                    result = await deleteOrderDetailAsync(collection["orderDetailId_" + i]);
+                    PropertyNameCaseInsensitive = false,
+                };
+                //lay gia tri max
+                //lap voi moi OrderDetail
+                //neu la delete thi phai co OrderDetailID de xoa
+                //neu la old thi next
+                //neu la new thi add (can OrderID)
+                int max = Int32.Parse(collection["MaxNo2"]);
+                int orderId = Int32.Parse(collection["orderID"]);
+                bool result = true;
+                for (int i = 1; i <= max; i++)
+                {
+
+                    if ((collection["isDelete_" + i].Equals("d")) && (collection["orderDetailId_" + i].ToString().Length != 0))
+                    {
+                        result = await deleteOrderDetailAsync(collection["orderDetailId_" + i]);
+                    }
+                    else if (collection["isDelete_" + i].Equals("o"))
+                    {
+                    }
+                    else if (collection["isDelete_" + i].Equals("n"))
+                    {
+                        result = await addOrderDetailAsync(orderId, collection["productid_" + i], collection["unitprice_" + i], collection["quantity_" + i], collection["discount_" + i]);
+                    }
+                    else
+                    {
+                    }
+                    if (result == false)
+                    {
+                        return RedirectToAction("UpdateOrder", "Order", new { orderid = orderId });
+                    }
                 }
-                else if(collection["isDelete_" + i].Equals("o"))
+                if (result == true)
                 {
-                }
-                else if (collection["isDelete_" + i].Equals("n"))
-                {
-                    result = await addOrderDetailAsync(orderId,collection["productid_" + i], collection["unitprice_" + i], collection["quantity_" + i], collection["discount_" + i]);
+                    return RedirectToAction("Index", "Order");
                 }
                 else
                 {
+                    return RedirectToAction("Create", "Order");
                 }
-                if (result == false)
-                {
-                    return RedirectToAction("UpdateOrder", "Order", new { orderid =orderId});
-                }
-            }
-            if (result == true)
+            }catch(Exception ex)
             {
-                return RedirectToAction("Index", "Order");
-            }
-            else
-            {
-                return RedirectToAction("Create", "Order");
+                return RedirectToAction("UpdateOrder", "Order", new {id= orderId1 });
             }
         }
 

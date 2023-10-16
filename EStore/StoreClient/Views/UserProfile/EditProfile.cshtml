@@ -22,12 +22,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="MemberId" class="control-label">Id</label>
-                <input asp-for="MemberId" class="form-control" value="@ViewBag.user.MemberId" readonly="readonly" />
+                <input asp-for="MemberId" class="form-control" value="@ViewBag.user.MemberId" readonly="readonly" required />
                 <span asp-validation-for="MemberId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label">Email(<span style="color:red">*</span>)</label>
-                <input asp-for="Email" class="form-control" value="@ViewBag.user.Email" />
+                <input asp-for="Email" class="form-control" value="@ViewBag.user.Email" required />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -47,7 +47,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label">Password(<span style="color:red">*</span>)</label>
-                <input type="password" asp-for="Password" class="form-control" value="@ViewBag.user.Password" />
+                <input type="password" asp-for="Password" class="form-control" value="@ViewBag.user.Password" required />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">

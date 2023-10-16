@@ -27,22 +27,22 @@
                     <td>
                         <select class="form-control" id="ProductId" name="ProductId" style="margin:5px; border-radius:5px;padding-left:10px;width:80%"
                                 asp-items="@(new SelectList(ViewBag.products, nameof(Product.ProductId),nameof(Product.ProductName)))"
-                                >
+                                required>
                         <option>Please select one</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td><p style="margin:5px">UnitPrice(<span style="color:red">*</span>)</p></td>
-                    <td><input id="UnitPrice" name="UnitPrice" type="number" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
+                    <td><input id="UnitPrice" name="UnitPrice" type="number" style="margin:5px; border-radius:5px;padding-left:10px" required /></td>
                 </tr>
                 <tr>
                     <td><p style="margin:5px">Quantity(<span style="color:red">*</span>)</p></td>
-                    <td><input id="Quantity" name="Quantity" type="number" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
+                    <td><input id="Quantity" name="Quantity" type="number" style="margin:5px; border-radius:5px;padding-left:10px" required /></td>
                 </tr>
                 <tr>
                     <td><p style="margin:5px">Discount(<span style="color:red">*</span>)</p></td>
-                    <td><input id="Discount" name="Discount" type="number" style="margin:5px; border-radius:5px;padding-left:10px" /></td>
+                    <td><input id="Discount" name="Discount" type="number" style="margin:5px; border-radius:5px;padding-left:10px" required /></td>
                 </tr>
                 <tr hidden>
                     <td><p style="margin:5px"> </p></td>

@@ -22,7 +22,7 @@
         <form method="post" action="@Url.Action("Update", "Members", new { @Model.MemberId })">
             <div class="form-group">
                 <label for="ProductName">Email:</label>
-                <input asp-for="@Model.Email" class="form-control" />
+                <input asp-for="@Model.Email" class="form-control" required />
             </div>
             <div class="form-group">
                 <label for="CategoryId">CompanyName:</label>
@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label for="UnitInStock">Password:</label>
-                <input asp-for="@Model.Password" class="form-control" />
+                <input asp-for="@Model.Password" class="form-control" required />
             </div>
             <input type="submit" value="Update" class="btn btn-primary" />
         </form>

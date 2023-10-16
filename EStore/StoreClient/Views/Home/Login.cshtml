@@ -11,12 +11,12 @@
     <div class="col-md-4">
         <form asp-action="Login">
             <div class="form-group">
-                <label asp-for="Email" class="control-label">Email:</label>
-                <input asp-for="Email" class="form-control" />
+                <label asp-for="Email" class="control-label" >Email:</label>
+                <input asp-for="Email" class="form-control" required/>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label">Password:</label>
-                <input type="password" asp-for="Password" class="form-control" />
+                <input type="password" asp-for="Password" class="form-control" required />
             </div>
             <div class="form-group">
                 <input type="submit" value="Login" class="btn btn-primary" style="width:100%;color:white;background:#BD0A2A;text-align: center;text-decoration:none;margin-top:5px" />
